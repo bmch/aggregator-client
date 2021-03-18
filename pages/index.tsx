@@ -1,9 +1,10 @@
-import Products from "components/Products";
 import { initializeApollo, addApolloState } from "lib/apolloClient";
+import ProductContainer from "components/ProductContainer";
 import { ALL_PRODUCTS_QUERY } from "components/Products";
+import { useRouter } from "next/router";
 
 const IndexPage = ({ data }) => {
-	return <Products data={data} />;
+	return <ProductContainer data={data} />;
 };
 
 export async function getStaticProps() {

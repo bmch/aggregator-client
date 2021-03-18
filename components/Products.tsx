@@ -19,6 +19,7 @@ export const ALL_PRODUCTS_QUERY = gql`
 				publication {
 					name
 				}
+				id
 				score
 				date
 				author

@@ -28,7 +28,6 @@ const Capitalize = styled.div`
 
 export default function Product({ product }) {
 	const avgScore = calculateAvgScore(product.review);
-	console.log("average score is ", avgScore);
 
 	return (
 		<Card>

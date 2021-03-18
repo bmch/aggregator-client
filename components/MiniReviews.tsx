@@ -6,7 +6,7 @@ const MiniReviews = ({ reviews }) => {
 		<div>
 			{reviews.map((review) => {
 				return (
-					<div>
+					<div key={review.id}>
 						{review.score} {review.publication.name} {formatDate(review.date)}
 					</div>
 				);
