@@ -1,10 +1,21 @@
 import { useState, useEffect } from "react";
 import Products from "components/Products";
 import FilterPrices from "components/FilterPrices";
-import filterBounds from "lib/filterBounds";
+import filterSelectorRanges from "lib/createFilterSelectorRanges";
 import { useRouter } from "next/router";
 
 const ProductContainer = ({ data }) => {
+
+	const avgWeightsOfBikes = data.allBikes.map(bike => {
+		let sumOfWeights = 0;
+		let avgWeight = 0;
+		if (bike.weight && bike.weight.length) {
+			sumOfWeights = bike.weight.reduce((accum, val) => accum + parseFloat(val.weight_in_kg), 0)
+			avgWeight = sumOfWeights / bike.weight.length
+		}
+		return { avgWeight: avgWeight.toFixed(2), id: bike.id }
+	})
+
 
 	const router = useRouter();
 
@@ -32,11 +43,15 @@ const ProductContainer = ({ data }) => {
 
 
 	const [visibleData, setVisibleData] = useState(data);
-	const bounds = filterBounds(data.allBikes, 50000);
+
+
+	const priceRangeSelectors = filterSelectorRanges(data.allBikes, 'price', 50000, 100);
+	const weightBounds = filterSelectorRanges(avgWeightsOfBikes, 'avgWeight', 0.5, 0.01)
+
 
 	return (
 		<div>
-			<FilterPrices bounds={bounds} />
+			<FilterPrices bounds={priceRangeSelectors} />
 			<Products data={visibleData} />
 		</div>
 	);

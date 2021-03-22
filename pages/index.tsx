@@ -1,7 +1,6 @@
 import { initializeApollo, addApolloState } from "lib/apolloClient";
 import ProductContainer from "components/ProductContainer";
 import { ALL_PRODUCTS_QUERY } from "components/Products";
-import { useRouter } from "next/router";
 
 const IndexPage = ({ data }) => {
 	return <ProductContainer data={data} />;

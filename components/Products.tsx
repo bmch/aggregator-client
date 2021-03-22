@@ -15,6 +15,10 @@ export const ALL_PRODUCTS_QUERY = gql`
 					publicUrlTransformed
 				}
 			}
+			weight {
+				size_in_cm
+				weight_in_kg
+			  }
 			review {
 				publication {
 					name
