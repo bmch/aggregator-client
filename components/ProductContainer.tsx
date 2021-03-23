@@ -72,7 +72,7 @@ const ProductContainer = ({ data }) => {
 
 	const priceRangeSelectors = filterSelectorRanges(data.allBikes, 'price', 50000, 100);
 	const weightSelectors = filterSelectorRanges(avgWeightsOfBikes, 'avgWeight', 0.5, 0.01)
-	const formatWeight = (value) => value.toFixed(2)
+	const formatWeight = (value) => value.toFixed(2) + 'kg'
 	return (
 		<div>
 			<FilterCheckboxes
