@@ -1,10 +1,8 @@
-import formatMoney from "lib/formatMoney";
-import { useState } from 'react'
-import styled from "styled-components";
+import { useState, useEffect } from 'react'
 import { useRouter } from "next/router";
-import { useEffect } from 'react'
+import styled from "styled-components";
 
-const FilterPrices = ({ bounds }) => {
+const FilterCheckboxes = ({ bounds, queryParam, formatUnits }) => {
 	const router = useRouter()
 	const CheckBoxSelect = styled.label`
 	display:block;
@@ -20,12 +18,12 @@ const FilterPrices = ({ bounds }) => {
 
 	useEffect(() => {
 		if (!router.isReady) return;
-		if (router.query.road_bikes_under) {
-			const priceRangesArr = router.query.road_bikes_under.split(",");
+		if (router.query[queryParam]) {
+			const filterRangesArr = router.query[queryParam].split(",");
 			const selectedOptions = { ...initialState }
-			priceRangesArr.forEach(priceRange => {
-				if (selectedOptions.hasOwnProperty(priceRange)) {
-					selectedOptions[priceRange] = true
+			filterRangesArr.forEach(filterRange => {
+				if (selectedOptions.hasOwnProperty(filterRange)) {
+					selectedOptions[filterRange] = true
 				}
 			})
 			setFormState(selectedOptions)
@@ -49,9 +47,9 @@ const FilterPrices = ({ bounds }) => {
 
 		// if any option(s) are selected
 		if (createUrlQueryParamsFromState().length) {
-			pathAndQueryParams.query.road_bikes_under = createUrlQueryParamsFromState()
+			pathAndQueryParams.query[queryParam] = createUrlQueryParamsFromState()
 		} else {
-			delete pathAndQueryParams.query.road_bikes_under
+			delete pathAndQueryParams.query[queryParam]
 		}
 
 		router.push(pathAndQueryParams,
@@ -74,7 +72,7 @@ const FilterPrices = ({ bounds }) => {
 	const createCheckbox = val => {
 		if (val[2] > 0) return (
 			<CheckBoxSelect key={val}>
-				{formatMoney(val[0])}-{formatMoney(val[1])} ({val[2]})
+				{formatUnits(val[0])}-{formatUnits(val[1])} ({val[2]})
 				<input
 					onChange={handleCheckboxChange}
 					name={`${val[1]}-${val[0]}`}
@@ -97,4 +95,4 @@ const FilterPrices = ({ bounds }) => {
 	);
 };
 
-export default FilterPrices;
+export default FilterCheckboxes;
