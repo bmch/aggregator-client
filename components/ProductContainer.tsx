@@ -15,18 +15,16 @@ const ProductContainer = ({ data }) => {
 	const PRICE_PARAM = "road_bikes_under";
 	const WEIGHT_PARAM = "light_kg_road_bikes";
 
-	const [visibleData, setVisibleData] = useState(data);
-
-	const router = useRouter();
-
 	const avgWeightsOfBikes = averageWeight(data.allBikes);
+
+	const [visibleData, setVisibleData] = useState(data);
+	const router = useRouter();
 
 	useEffect(() => {
 		if (!router.query || !router.isReady) {
 			setVisibleData(data);
 			return;
 		}
-		setVisibleData(data);
 
 		const hasPriceFilters = !!router.query[PRICE_PARAM];
 		const hasWeightFilters = !!router.query[WEIGHT_PARAM];
@@ -74,9 +72,15 @@ const ProductContainer = ({ data }) => {
 	return (
 		<>
 			<SelectorContainer>
-				<PriceFilter queryParam={PRICE_PARAM} data={visibleData} />
+				<PriceFilter
+					priceParam={PRICE_PARAM}
+					weightParam={WEIGHT_PARAM}
+					data={data}
+					avgWeightsOfBikes={avgWeightsOfBikes}
+				/>
 				<WeightFilter
-					queryParam={WEIGHT_PARAM}
+					priceParam={PRICE_PARAM}
+					weightParam={WEIGHT_PARAM}
 					data={data}
 					visibleData={visibleData}
 				/>
