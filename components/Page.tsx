@@ -5,6 +5,7 @@ const GlobalStyles = createGlobalStyle`
     --maxWidth:1300px;
     box-sizing: border-box;
     font-size: 62.5%; //10px
+    font-family:Helvetica, sans-serif;
   }
   *, *:before, *:after {
     box-sizing: inherit;
