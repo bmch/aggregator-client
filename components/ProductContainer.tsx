@@ -3,17 +3,9 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 
 import Products from "components/Products";
-import PriceFilter from "components/PriceFilter";
-import WeightFilter from "components/WeightFilter";
-import SortSelector from "components/SortSelector";
-import SelectorButtons from "components/SelectorButtons";
 import averageWeight from "lib/averageWeight";
 import calculateAvgScore from "lib/calculateAvgScore";
-
-const SelectorContainer = styled.div`
-	display: flex;
-	background: #eeeeee;
-`;
+import WidgetContainer from "components/WidgetContainer";
 
 const sortSelection = [
 	{ value: "price-asc", content: "Price: Low to High" },
@@ -33,8 +25,9 @@ const DownTriangle = styled.span`
 	//border: 1px solid blue;
 `;
 const ProductContainer = ({ data }) => {
-	const PRICE_PARAM = "road_bikes_under";
-	const WEIGHT_PARAM = "light_kg_road_bikes";
+	const PRICE_PARAM = "price_range";
+	const WEIGHT_PARAM = "bike_weight_kg";
+	const BRAND_PARAM = "brand";
 
 	const avgWeightsOfBikes = averageWeight(data.allBikes);
 
@@ -50,9 +43,11 @@ const ProductContainer = ({ data }) => {
 		const hasPriceFilters = !!router.query[PRICE_PARAM];
 		const hasWeightFilters = !!router.query[WEIGHT_PARAM];
 		const hasSort = !!router.query.sort;
+		const hasBrandFilters = !!router.query[BRAND_PARAM];
 
 		let priceRangesArr;
 		let weightRangesArr;
+		let brandsArr;
 		let sort;
 
 		hasPriceFilters
@@ -60,6 +55,9 @@ const ProductContainer = ({ data }) => {
 			: null;
 		hasWeightFilters
 			? (weightRangesArr = (router.query[WEIGHT_PARAM] as string).split(","))
+			: null;
+		hasBrandFilters
+			? (brandsArr = (router.query[BRAND_PARAM] as string).split(","))
 			: null;
 		hasSort ? (sort = router.query.sort) : null;
 
@@ -95,6 +93,11 @@ const ProductContainer = ({ data }) => {
 										avgWeight >= parseFloat(weightRange[1])
 									);
 							  })
+							: true) &&
+						(hasBrandFilters
+							? brandsArr.some((brand) => {
+									return bike.brand.name === brand;
+							  })
 							: true)
 					);
 				})
@@ -124,43 +127,16 @@ const ProductContainer = ({ data }) => {
 		});
 	}, [router.query]);
 
-	const [selector, setSelector] = useState(null);
-
-	const handleSelectorChange = (value) => {
-		if (value === selector) {
-			setSelector(null);
-			return;
-		}
-		setSelector(value);
-	};
 	return (
 		<>
-			<SelectorButtons handleSelectorChange={handleSelectorChange} />
-			<SelectorContainer>
-				{selector === "price" && (
-					<PriceFilter
-						priceParam={PRICE_PARAM}
-						weightParam={WEIGHT_PARAM}
-						data={data}
-						avgWeightsOfBikes={avgWeightsOfBikes}
-					/>
-				)}
-				{selector === "weight" && (
-					<WeightFilter
-						priceParam={PRICE_PARAM}
-						weightParam={WEIGHT_PARAM}
-						data={data}
-						visibleData={visibleData}
-					/>
-				)}
-				{selector === "sort" && (
-					<SortSelector
-						data={data}
-						visibleData={visibleData}
-						sortSelection={sortSelection}
-					/>
-				)}
-			</SelectorContainer>
+			<WidgetContainer
+				priceParam={PRICE_PARAM}
+				weightParam={WEIGHT_PARAM}
+				data={data}
+				visibleData={visibleData}
+				avgWeightsOfBikes={avgWeightsOfBikes}
+				sortSelection={sortSelection}
+			/>
 			<Products data={visibleData} />
 		</>
 	);

@@ -18,7 +18,7 @@ const Card = styled.div`
 		margin-right: auto;
 		transition: all 0.3s ease 0s;
 		:hover {
-			transform: scale(1.04);
+			transform: scale(1.03);
 		}
 	}
 `;
@@ -39,6 +39,7 @@ export default function Product({ product }) {
 			<Capitalize>{formatName(product.name)}</Capitalize>
 			<div>Average Score {avgScore}%</div>
 			<MiniReviews reviews={product.review}></MiniReviews>
+			<div>{product.brand.name}</div>
 		</Card>
 	);
 }

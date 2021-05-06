@@ -1,30 +1,7 @@
 import { useState, useEffect } from "react";
 import { Router, useRouter } from "next/router";
 import styled from "styled-components";
-
-const CheckBoxSelect = styled.li`
-	color: #2c2b2b;
-	display: block;
-	cursor: pointer;
-	background: white;
-	:hover {
-		background: #dee9f8;
-	}
-	border-radius: 0.5rem;
-	margin: 0.8rem;
-	padding: 0.2rem 0.8rem 0.2rem 0.8rem;
-	${({ selected }) =>
-		selected &&
-		`
-		color:white;
-		font-weight: 900;
-		font-size:1.5rem;
-    background: #2E70CF;
-	:hover {
-		background: #2E70CF;
-	}
-  `};
-`;
+import { CheckBoxSelect } from "components/FilterCheckboxes";
 
 const SortSelector = ({ data, visibleData, sortSelection }) => {
 	const router = useRouter();

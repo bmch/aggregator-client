@@ -6,6 +6,7 @@ const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
     font-size: 62.5%; //10px
     font-family:Helvetica, sans-serif;
+  overflow-y: scroll;
   }
   *, *:before, *:after {
     box-sizing: inherit;
@@ -23,6 +24,11 @@ const GlobalStyles = createGlobalStyle`
   a:hover {
     text-decoration: underline;
   }
+  input, button {
+    border:none;
+    outline: none;
+
+     }
 `;
 
 const InnerStyles = styled.div`

@@ -9,6 +9,9 @@ export const ALL_PRODUCTS_QUERY = gql`
 			name
 			price
 			description
+			brand {
+				name
+			}
 			photo {
 				id
 				image {
@@ -18,7 +21,7 @@ export const ALL_PRODUCTS_QUERY = gql`
 			weight {
 				size_in_cm
 				weight_in_kg
-			  }
+			}
 			review {
 				publication {
 					name

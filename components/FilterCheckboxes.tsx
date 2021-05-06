@@ -2,11 +2,12 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 
-const CheckBoxSelect = styled.li`
+export const CheckBoxSelect = styled.li`
 	color: #2c2b2b;
 	display: block;
 	cursor: pointer;
 	background: white;
+	width: 20rem;
 	:hover {
 		background: #dee9f8;
 	}
@@ -26,7 +27,7 @@ const CheckBoxSelect = styled.li`
   `};
 `;
 
-const CheckboxLabel = styled.label`
+export const CheckboxLabel = styled.label`
 	margin: 0;
 	width: 100%;
 	display: block;
